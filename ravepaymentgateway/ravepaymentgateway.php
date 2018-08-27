@@ -31,7 +31,7 @@
 
       $this->name = 'ravepaymentgateway';
       $this->tab  = 'payments_gateways';
-      $this->version = '0.0.1';
+      $this->version = '0.0.2';
       $this->author   = 'Bosun Olanrewaju';
       $this->bootstrap  = true;
 

@@ -2,7 +2,7 @@
 <module>
 	<name>ravepaymentgateway</name>
 	<displayName><![CDATA[Rave Payment Gateway]]></displayName>
-	<version><![CDATA[0.0.1]]></version>
+	<version><![CDATA[0.0.2]]></version>
 	<description><![CDATA[Accept payments on your shop with Rave]]></description>
 	<author><![CDATA[Bosun Olanrewaju]]></author>
 	<tab><![CDATA[payments_gateways]]></tab>

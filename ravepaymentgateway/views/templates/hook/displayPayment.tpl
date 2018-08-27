@@ -3,7 +3,7 @@
     <p class="payment_module ">
       <span class="rave-payment-gateway">
         {l s='Pay with Rave' mod='ravepaymentgateway'}
-        <button class="rave-pay-now-button pull-right">{$btntext}</button>
+        {* <button class="rave-pay-now-button pull-right">{$btntext}</button> *}
       </span>
       <script type="text/javascript">
         $('.rave-pay-now-button').click(function() {
