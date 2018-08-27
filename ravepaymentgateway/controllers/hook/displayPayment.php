@@ -42,8 +42,6 @@
         'customer_email' => $customer->email,
       ));
       $this->context->controller->addCSS($this->_path.'views/css/ravepaymentgateway.css', 'all');
-      $this->context->controller->addJS($this->context->cookie->base_url . '/flwv3-pug/getpaidx/api/flwpbf-inline.js');
-      $this->context->controller->addJS($this->_path.'views/js/rave.js');
       return $this->module->display($this->file, 'displayPayment.tpl');
     }
   }

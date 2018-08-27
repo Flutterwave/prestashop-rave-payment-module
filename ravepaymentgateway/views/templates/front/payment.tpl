@@ -48,6 +48,19 @@
         {l s='We allow the following currency to be sent via Rave Payment Gateway:' mod='ravepaymentgateway'}&nbsp;<b>{$currencies.0.name}</b>
         <input type="hidden" name="currency_payment" value="{$currencies.0.id_currency}" />
       {/if}
+
+
+      <br />
+      <br />
+      ITEMS:
+
+      {foreach from=$products item=product}
+      <p>
+        {$product.name} x <b>{$product.cart_quantity}</b> -  {displayPrice price=$product.total_wt}
+      </p>
+      {/foreach}
+
+      <br />
       <p>
         - {l s='Rave payment gateway account information will be displayed on the next page.' mod='ravepaymentgateway'}
         <br />
@@ -63,13 +76,34 @@
       {l s='Other payment methods' mod='ravepaymentgateway'}
     </a>
     <button
-        class="button btn btn-default button-medium"
-        type="submit">
+        class="button btn btn-default button-medium rave-payment-gateway"
+        type="button">
       <span>
         {l s='I confirm my order' mod='ravepaymentgateway'}
         <i class="icon-chevron-right right"></i>
       </span>
     </button>
+    <script>
+    
+    </script>
+    <script type="text/javascript">
+        $('.rave-payment-gateway').click(function() {
+          var config = {
+            amount : "{$amount}",
+            custom_description: "{$desc}",
+            custom_logo   : "{$logo}",
+            custom_title  : "{$title}",
+            PBFPubKey : "{$pb_key}",
+            currency  : "{$currency}",
+            country   : "{$country}",
+            txref     : "{$txref}",
+            customer_email: "{$customer_email}",
+            cbUrl : "{$link->getModuleLink('ravepaymentgateway', 'validation', [], true)}",
+          };
+
+          processPayment(config);
+        });
+    </script>
   </form>
 {/if}
 
