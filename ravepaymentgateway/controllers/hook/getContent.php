@@ -18,13 +18,15 @@ class RavePaymentGatewayGetContentController
   {
     if (Tools::isSubmit('ravepaymentgateway_form'))
     {
-      Configuration::updateValue('RAVE_PB_KEY', Tools::getValue('RAVE_PB_KEY'));
-      Configuration::updateValue('RAVE_SC_KEY', Tools::getValue('RAVE_SC_KEY'));
+      Configuration::updateValue('RAVE_COUNTRY', Tools::getValue('RAVE_COUNTRY'));
+      Configuration::updateValue('RAVE_LIVE_PUBLIC_KEY', Tools::getValue('RAVE_LIVE_PUBLIC_KEY'));
+      Configuration::updateValue('RAVE_LIVE_SECRET_KEY', Tools::getValue('RAVE_LIVE_SECRET_KEY'));
+      Configuration::updateValue('RAVE_TEST_PUBLIC_KEY', Tools::getValue('RAVE_TEST_PUBLIC_KEY'));
+      Configuration::updateValue('RAVE_TEST_SECRET_KEY', Tools::getValue('RAVE_TEST_SECRET_KEY'));
       Configuration::updateValue('RAVE_GO_LIVE', Tools::getValue('RAVE_GO_LIVE'));
       Configuration::updateValue('RAVE_MODAL_TITLE', Tools::getValue('RAVE_MODAL_TITLE'));
       Configuration::updateValue('RAVE_MODAL_DESC', Tools::getValue('RAVE_MODAL_DESC'));
       Configuration::updateValue('RAVE_MODAL_LOGO', Tools::getValue('RAVE_MODAL_LOGO'));
-      Configuration::updateValue('RAVE_PAY_BUTTON_TEXT', Tools::getValue('RAVE_PAY_BUTTON_TEXT'));
       $this->context->smarty->assign('confirmation', 'ok');
     }
   }
@@ -39,19 +41,30 @@ class RavePaymentGatewayGetContentController
       ),
     );
 
+    $rave_countries = array(
+      array(
+        'id'    => 'NG',
+        'name'  => $this->module->l('Nigeria'),
+        'val'   => 'NG'
+      ),
+      array(
+        'id'    => 'GH',
+        'name'  => $this->module->l('Ghana'),
+        'val'   => 'GH'
+      ),
+      array(
+        'id'    => 'KE',
+        'name'  => $this->module->l('Kenya'),
+        'val'   => 'KE'
+      ),
+      array(
+        'id'    => 'ZA',
+        'name'  => $this->module->l('South Africa'),
+        'val'   => 'ZA'
+      )
+    );
+
     $inputs = array(
-      array(
-        'name'  => 'RAVE_PB_KEY',
-        'label' => $this->module->l('Pay Button Public Key'),
-        'desc'  => 'Your Pay Button public key',
-        'type'  => 'text'
-      ),
-      array(
-        'name'  => 'RAVE_SC_KEY',
-        'label' => $this->module->l('Pay Button Secret Key'),
-        'desc'  => 'Your Pay Button secret key',
-        'type'  => 'text'
-      ),
       array(
         'name'  => 'RAVE',
         'label' => $this->module->l('Go Live'),
@@ -62,6 +75,42 @@ class RavePaymentGatewayGetContentController
           'id'    => 'id',
           'name'  => 'name'
         )
+      ),
+      array(
+        'name'  => 'RAVE_COUNTRY',
+        'label' => $this->module->l('Merchant Country'),
+        'desc'  => $this->module->l('Your country'),
+        'type'  => 'select',
+        'required' => true,
+        'options'=> array(
+          'query' => $rave_countries ,
+          'id'    => 'id',
+          'name'  => 'name'
+        )
+      ),
+      array(
+        'name'  => 'RAVE_LIVE_PUBLIC_KEY',
+        'label' => $this->module->l('Rave Live Public Key'),
+        'desc'  => 'Your live public key',
+        'type'  => 'text'
+      ),
+      array(
+        'name'  => 'RAVE_LIVE_SECRET_KEY',
+        'label' => $this->module->l('Rave Live Secret Key'),
+        'desc'  => 'Your live secret key',
+        'type'  => 'text'
+      ),
+      array(
+        'name'  => 'RAVE_TEST_PUBLIC_KEY',
+        'label' => $this->module->l('Rave Test Public Key'),
+        'desc'  => 'Your test public key',
+        'type'  => 'text'
+      ),
+      array(
+        'name'  => 'RAVE_TEST_SECRET_KEY',
+        'label' => $this->module->l('Rave Test Secret Key'),
+        'desc'  => 'Your test secret key',
+        'type'  => 'text'
       ),
       array(
         'name'  => 'RAVE_MODAL_TITLE',
@@ -81,12 +130,6 @@ class RavePaymentGatewayGetContentController
         'desc'  => "(Optional) - Full URL (with 'http') to the custom logo. default: Rave logo",
         'type'  => 'text'
       ),
-      array(
-        'name'  => 'RAVE_PAY_BUTTON_TEXT',
-        'label' => $this->module->l('Pay Button Text'),
-        'desc'  => '(Optional) default: PAY NOW',
-        'type'  => 'text',
-        ),
     );
 
     $fields_form = array(
@@ -109,13 +152,15 @@ class RavePaymentGatewayGetContentController
     $helper->token = Tools::getAdminTokenLite('AdminModules');
     $helper->tpl_vars = array(
       'fields_value' => array(
-        'RAVE_PB_KEY' => Tools::getValue('RAVE_PB_KEY', Configuration::get('RAVE_PB_KEY')),
-        'RAVE_SC_KEY' => Tools::getValue('RAVE_SC_KEY', Configuration::get('RAVE_SC_KEY')),
+        'RAVE_COUNTRY' => Tools::getValue('RAVE_COUNTRY', Configuration::get('RAVE_COUNTRY')),
+        'RAVE_LIVE_PUBLIC_KEY' => Tools::getValue('RAVE_LIVE_PUBLIC_KEY', Configuration::get('RAVE_LIVE_PUBLIC_KEY')),
+        'RAVE_LIVE_SECRET_KEY' => Tools::getValue('RAVE_LIVE_SECRET_KEY', Configuration::get('RAVE_LIVE_SECRET_KEY')),
+        'RAVE_TEST_PUBLIC_KEY' => Tools::getValue('RAVE_TEST_PUBLIC_KEY', Configuration::get('RAVE_TEST_PUBLIC_KEY')),
+        'RAVE_TEST_SECRET_KEY' => Tools::getValue('RAVE_TEST_SECRET_KEY', Configuration::get('RAVE_TEST_SECRET_KEY')),
         'RAVE_GO_LIVE' => Tools::getValue('RAVE_GO_LIVE', Configuration::get('RAVE_GO_LIVE')),
         'RAVE_MODAL_TITLE' => Tools::getValue('RAVE_MODAL_TITLE', Configuration::get('RAVE_MODAL_TITLE')),
         'RAVE_MODAL_DESC' => Tools::getValue('RAVE_MODAL_DESC', Configuration::get('RAVE_MODAL_DESC')),
         'RAVE_MODAL_LOGO' => Tools::getValue('RAVE_MODAL_LOGO', Configuration::get('RAVE_MODAL_LOGO')),
-        'RAVE_PAY_BUTTON_TEXT' => Tools::getValue('RAVE_PAY_BUTTON_TEXT', Configuration::get('RAVE_PAY_BUTTON_TEXT')),
       ),
       'languages' => $this->context->controller->getLanguages()
     );

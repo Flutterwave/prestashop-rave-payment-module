@@ -32,6 +32,14 @@
       if (!Validate::isLoadedObject($customer))
         Tools::redirect('index.php?controller=order&step=1');
 
+
+      $sec_key = Configuration::get('RAVE_TEST_SECRET_KEY');
+
+      if ( $go_live ) {
+        $this->context->cookie->base_url = 'https://api.ravepay.co';
+        $sec_key = Configuration::get('RAVE_LIVE_SECRET_KEY');
+      }
+
       // Setting data
       $message          = null;
       $currency         = $this->context->currency;
@@ -42,14 +50,20 @@
       $payment_status   = Tools::getValue('status_code');
       $tx_ref           = Tools::getValue('tx_ref');
       $flw_ref          = Tools::getValue('flw_ref');
-      $sec_key          = Configuration::get('RAVE_SC_KEY');
 
       $extra_vars = array(
         'transaction_id' => $tx_ref,
       );
 
-      $txn = json_decode( $this->_fetchTransaction($flw_ref, $sec_key) );
-      $is_successful = !empty($txn->data) && $this->_is_successful($txn->data);
+      $resp = $this->_fetchTransaction($tx_ref, $sec_key);
+
+
+      $paymentStatus = $resp['data']['status'];
+      $chargeResponsecode = $resp['data']['chargecode'];
+      $chargeAmount = $resp['data']['amount'];
+      $chargeCurrency = $resp['data']['currency'];
+
+      $is_successful = !empty($resp) && $this->_is_successful($resp);
 
       $message  = 'New Order Details - <br>'.
                   'Transaction Ref: ' . $extra_vars['transaction_id'] . ' - <br>'.
@@ -64,14 +78,14 @@
 
         $order_status_id = 'PS_OS_PAYMENT';
 
-        if ($amount_paid != $total) {
+        if ($total != $chargeAmount) {
           $order_status_id = 'PS_OS_RAVE_PENDING';
 
           $message .= 'Attention: This order have been placed on hold and payment flagged because of incorrect payment amount. Please, look into it. - <br>';
           $message .= 'Amount paid: '.$currency->iso_code.' '.$amount_paid.'  - <br> Order amount: '.
                       $currency->iso_code.' '.$total.'  - <br> Reference: ' .$extra_vars['transaction_id'];
 
-        } elseif ($payment_currency != $currency->iso_code) {
+        } elseif ($chargeCurrency != $currency->iso_code) {
 
           $order_status_id = 'PS_OS_RAVE_PENDING';
 
@@ -111,33 +125,40 @@
       Tools::redirect($url);
     }
 
-    private function _fetchTransaction($flwRef, $secretKey) {
+    private function _fetchTransaction($txref, $secretKey) {
 
-      $URL = $this->context->cookie->base_url . "/flwv3-pug/getpaidx/api/verify";
-      $data = http_build_query(array(
-        'flw_ref' => $flwRef,
+      $URL = $this->context->cookie->base_url . "/flwv3-pug/getpaidx/api/v2/verify";
+      $query = array(
+        'txref' => $txref,
         'SECKEY' => $secretKey
-      ));
+      );
 
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, $URL);
-      curl_setopt($ch, CURLOPT_POST, true);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+      $data_string = json_encode($query);
+      
+      $ch = curl_init($URL);                                                                      
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                              
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      $output = curl_exec($ch);
-      $failed = curl_errno($ch);
-      $error = curl_error($ch);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+      $response = curl_exec($ch);
+
+      $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+      $header = substr($response, 0, $header_size);
+      $body = substr($response, $header_size);
+
       curl_close($ch);
-      return ($failed) ? $error : $output;
+
+      $resp = json_decode($response, true);
+
+      return $resp;
 
     }
 
     private function _is_successful($data) {
 
-      return $data->flwMeta->chargeResponse === '00' || $data->flwMeta->chargeResponse === '0';
+      return $data['data']['chargecode'] === '00' || $data['data']['chargecode'] === '0';
 
     }
   }

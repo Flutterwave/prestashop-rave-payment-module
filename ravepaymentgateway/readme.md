@@ -2,7 +2,7 @@
 
 With Rave, it is easy and smooth to accept card and bank account payments in your online store
 
- - **Contributors:** bosunolanrewaju, kingflamez
+ - **Contributors:** bosunolanrewaju
  - **Tags:** prestashop, rave, payment form, payment gateway, bank account, credit card, debit card, nigeria, kenya, international, mastercard, visa
  - **Requires at least:** 1.5
  - **Tested up to:** 1.6
@@ -12,16 +12,13 @@ With Rave, it is easy and smooth to accept card and bank account payments in you
 
 Accept Credit card, Debit card and Bank account payment directly on your Prestashop store with the Rave payment gateway.
 
-* Signup for a live account [here](https://rave.flutterwave.com)
-
-* Signup for a sandbox account [here](https://ravesandbox.flutterwave.com)
+Signup for an account [here](https://flutterwave.com)
 
 Rave is available in:
 
 * __Nigeria__
 * __Ghana__
 * __Kenya__
-* __South Africa__
 
 
 
@@ -31,8 +28,7 @@ Rave is available in:
 
 Safety Measure: Please make a backup of your website before installing any 3rd party module on your Prestashop site.
 
-*   Download the payment module to your computer from [here](https://github.com/kingflamez/prestashop-rave-payment-module-1.6x/releases/download/1.1.0/ravepaymentgateway.zip).
-
+*   Download the payment module to your computer from [here](https://github.com/bosunolanrewaju/prestashop-rave-payment-module/releases/download/v0.1.3/ravepaymentgateway.zip).
 *   Unzip (Extract) the content of the zip and copy the __ravepaymentgateway__ folder into your __Prestashop__ > __modules__ folder.
 *   Login to your Back Office.
 *   Go to "Modules and Services" in the menu, and search for __Rave Payment Gateway__ module.
@@ -55,15 +51,13 @@ The module is installed and must be configured.
 ![Rave Settings Screenshot](https://cloud.githubusercontent.com/assets/8383666/26606729/01622d38-458b-11e7-913c-ec53aa42c6fd.png)
 
 *  Press the __Configure__ button next to the __Rave Payment Gateway__ module to configure the module and fill the settings form appropriately.
-* __Country__ - Select the country you are operating from.
-* __Live Public Key__ - Enter your public key which can be retrieved from your [Rave dashboard](https://rave.flutterwave.com/dashboard/settings/apis).
-* __Live Secret Key__ - Enter your secret key which can be retrieved from your [Rave dashboard](https://rave.flutterwave.com/dashboard/settings/apis).
-* __Test Public Key__ - Enter your public key which can be retrieved from your [Rave Sandbox dashboard](https://ravesandbox.flutterwave.com/dashboard/settings/apis).
-* __Test Secret Key__ - Enter your secret key which can be retrieved from your [Rave Sandbox dashboard](https://ravesandbox.flutterwave.com/dashboard/settings/apis).
+* __Pay Button Public Key__ - Enter your public key which can be retrieved from "Pay Buttons" page on your Rave account dashboard.
+* __Pay Button Secret Key__ - Enter your secret key which can be retrieved from "Pay Buttons" page on your Rave account dashboard.
 * __Go live__ - Switch to live account (Must be set for production).
 * __Modal Title__ - (Optional) customize the title of the Pay Modal. Default is FLW PAY.
 * __Modal Description__ - (Optional) customize the description on the Pay Modal. Default is FLW PAY MODAL.
 * __Modal Logo__ - (Optional) customize the logo on the Pay Modal. Enter a full url (with 'http'). Default is Rave logo.
+* __Pay Button Text__ - (Optional) The text to display on the button. Default: "PAY NOW".
 * Click __Save__ to save the settings.
 
 
