@@ -34,12 +34,29 @@
       $currency_order = new Currency($this->context->cart->id_currency);
       $customer = new Customer($this->context->cart->id_customer);
 
+      //switch the country
+      switch ($currency_order->iso_code) {
+        case 'GHS':
+          $rave_country = 'GH';
+          break;
+        case 'KES':
+          $rave_country = 'KE';
+          break;
+        case 'ZAR':
+          $rave_country = 'ZA';
+          break;
+        
+        default:
+          $rave_country = 'NG';
+          break;
+      }      
+
       $all_products = self::$cart->getProducts();
 
       $this->context->smarty->assign(array(
         'nb_products' => $this->context->cart->nbProducts(),
         'cart_currency' => $this->context->cart->id_currency,
-        'currencies' => $this->module->getCurrency((int)$this->context->cart->id_currency),
+        'currencies' => $currency_order->iso_code,//$this->module->getCurrency((int)$this->context->cart->id_currency),
         'total_amount'=> $this->context->cart->getOrderTotal(true, Cart::BOTH),
         'path' => $this->module->getPathUri(),
         'pb_key'  => $publicKey,
@@ -47,7 +64,7 @@
         'desc'    => Configuration::get('RAVE_MODAL_DESC'),
         'logo'    => Configuration::get('RAVE_MODAL_LOGO'),
         'currency'=> $currency_order->iso_code,
-        'country' => Configuration::get('RAVE_COUNTRY'),
+        'country' => $rave_country, //Configuration::get('RAVE_COUNTRY'),
         'txref'   => "PS_" . $this->context->cart->id . '_' . time(),
         'amount'  => (float)$this->context->cart->getOrderTotal(true, Cart::BOTH),
         'customer_email' => $customer->email,
@@ -63,7 +80,7 @@
     {
 
       $currency_order = new Currency($this->context->cart->id_currency);
-      $currencies_modules = $this->module->getCurrency($this->context->cart->id_currency);
+      $currencies_modules = $this->module->getCurrency((int)$this->context->cart->id_currency);
 
       if (is_array($currencies_modules)) {
         foreach ($currencies_modules as $currency_module) {
