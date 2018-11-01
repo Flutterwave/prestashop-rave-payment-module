@@ -22,7 +22,8 @@ Rave is available in:
 * __Ghana__
 * __Kenya__
 * __South Africa__
-
+* __Uganda__
+* __Tanzania__
 
 
 ## Installation
