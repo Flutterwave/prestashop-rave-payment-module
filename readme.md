@@ -57,8 +57,8 @@ The module is installed and must be configured.
 * __Country__ - Select the country you are operating from.
 * __Live Public Key__ - Enter your public key which can be retrieved from your [Rave dashboard](https://rave.flutterwave.com/dashboard/settings/apis).
 * __Live Secret Key__ - Enter your secret key which can be retrieved from your [Rave dashboard](https://rave.flutterwave.com/dashboard/settings/apis).
-* __Test Public Key__ - Enter your public key which can be retrieved from your [Rave Sandbox dashboard](https://ravesandbox.flutterwave.com/dashboard/settings/apis).
-* __Test Secret Key__ - Enter your secret key which can be retrieved from your [Rave Sandbox dashboard](https://ravesandbox.flutterwave.com/dashboard/settings/apis).
+* __Test Public Key__ - Enter your public key which can be retrieved from your [Rave dashboard](https://rave.flutterwave.com/dashboard/settings/apis)(toggle to test mode).
+* __Test Secret Key__ - Enter your secret key which can be retrieved from your [Rave dashboard](https://rave.flutterwave.com/dashboard/settings/apis)(toggle to test mode).
 * __Go live__ - Switch to live account (Must be set for production).
 * __Modal Title__ - (Optional) customize the title of the Pay Modal. Default is FLW PAY.
 * __Modal Description__ - (Optional) customize the description on the Pay Modal. Default is FLW PAY MODAL.
