@@ -12,9 +12,7 @@ With Rave, it is easy and smooth to accept card and bank account payments in you
 
 Accept Credit card, Debit card and Bank account payment directly on your Prestashop store with the Rave payment gateway.
 
-* Signup for a live account [here](https://rave.flutterwave.com)
-
-* Signup for a sandbox account [here](https://ravesandbox.flutterwave.com)
+* Signup for an account [here](https://rave.flutterwave.com)
 
 Rave is available in:
 
@@ -24,7 +22,7 @@ Rave is available in:
 * __South Africa__
 * __Uganda__
 * __Tanzania__
-
+* __Rwanda__
 
 ## Installation
 
@@ -32,7 +30,7 @@ Rave is available in:
 
 Safety Measure: Please make a backup of your website before installing any 3rd party module on your Prestashop site.
 
-*   Download the payment module to your computer from [here](https://github.com/kingflamez/prestashop-rave-payment-module-1.6x/releases/download/1.1.0/ravepaymentgateway.zip).
+*   Download the payment module to your computer
 
 *   Unzip (Extract) the content of the zip and copy the __ravepaymentgateway__ folder into your __Prestashop__ > __modules__ folder.
 *   Login to your Back Office.
